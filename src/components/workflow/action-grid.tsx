@@ -8,27 +8,20 @@ import {
   CollapsibleContent,
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import {
-  Search,
-  ChevronDown,
-  MoreHorizontal,
-  Settings,
-  Sparkles,
-  Github,
-  MessageSquare,
-  Mail,
-  CreditCard,
-} from "lucide-react";
+import { Icon } from "@/components/ui/icon";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { icons } from "@/lib/icons";
+import type { IconName } from "@/lib/icons";
 import { ACTION_GROUPS } from "@/lib/workflow/constants";
 import type { ActionDefinition, ActionGroup } from "@/lib/workflow/types";
 
-const PROVIDER_ICONS: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-  System: Settings,
-  "AI Gateway": Sparkles,
-  GitHub: Github,
-  Slack: MessageSquare,
-  Resend: Mail,
-  Stripe: CreditCard,
+const PROVIDER_ICONS: Record<string, IconName> = {
+  System: "settings",
+  "AI Gateway": "sparkles",
+  GitHub: "github",
+  Slack: "message-square",
+  Resend: "mail",
+  Stripe: "credit-card",
 };
 
 interface ActionGridProps {
@@ -42,7 +35,7 @@ function ActionGroupSection({
   group: ActionGroup;
   onSelectAction: (action: ActionDefinition) => void;
 }) {
-  const Icon = PROVIDER_ICONS[group.provider] ?? Settings;
+  const iconName = PROVIDER_ICONS[group.provider] ?? "settings";
 
   return (
     <Collapsible defaultOpen>
@@ -50,14 +43,20 @@ function ActionGroupSection({
         <CollapsibleTrigger
           render={
             <Button variant="ghost" size="sm" className="gap-1.5 px-1">
-              <ChevronDown className="size-3.5 transition-transform [[data-open]_&]:rotate-0 [[data-closed]_&]:-rotate-90" />
-              <Icon className="size-4" />
+              <Icon name="chevron-down" size="xs" className="transition-transform [[data-open]_&]:rotate-0 [[data-closed]_&]:-rotate-90" />
+              <HugeiconsIcon
+                icon={icons[iconName]}
+                size="var(--icon-sm)"
+                strokeWidth={2}
+                color="currentColor"
+                className="shrink-0"
+              />
               <span className="text-sm font-medium">{group.provider}</span>
             </Button>
           }
         />
         <Button variant="ghost" size="icon-xs">
-          <MoreHorizontal className="size-3.5" />
+          <Icon name="more-horizontal" size="xs" />
         </Button>
       </div>
       <CollapsibleContent>
@@ -104,7 +103,9 @@ export function ActionGrid({ onSelectAction }: ActionGridProps) {
     <div className="flex flex-col">
       <div className="flex items-center gap-2 border-b px-3 py-2">
         <div className="relative flex-1">
-          <Search className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <Icon name="search" size="sm" />
+          </div>
           <Input
             placeholder="Search actions..."
             value={search}

@@ -1,11 +1,10 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 import type { NodeTypes, EdgeTypes, NodeMouseHandler, Node } from "@xyflow/react";
 import { ReactFlowProvider } from "@xyflow/react";
 import { Canvas } from "@/components/ai-elements/canvas";
 import { Edge } from "@/components/ai-elements/edge";
-import { Controls } from "@/components/ai-elements/controls";
 import { Connection } from "@/components/ai-elements/connection";
 import { useWorkflowStore } from "@/stores/workflow-store";
 import { TriggerNode } from "@/components/workflow/nodes/trigger-node";
@@ -21,7 +20,7 @@ const edgeTypes: EdgeTypes = {
   temporary: Edge.Temporary,
 };
 
-function WorkflowCanvasInner() {
+function WorkflowCanvasInner({ children }: { children?: ReactNode }) {
   const {
     nodes,
     edges,
@@ -57,30 +56,31 @@ function WorkflowCanvasInner() {
   );
 
   return (
-    <Canvas
-      nodes={nodes}
-      edges={edges}
-      nodeTypes={nodeTypes}
-      edgeTypes={edgeTypes}
-      onNodesChange={onNodesChange as never}
-      onEdgesChange={onEdgesChange as never}
-      onConnect={onConnect}
-      onNodeClick={handleNodeClick}
-      onEdgeClick={handleEdgeClick}
-      onPaneClick={handlePaneClick}
-      connectionLineComponent={Connection}
-      defaultEdgeOptions={defaultEdgeOptions}
-      panOnDrag
-    >
-      <Controls />
-    </Canvas>
+    <>
+      <Canvas
+        nodes={nodes}
+        edges={edges}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        onNodesChange={onNodesChange as never}
+        onEdgesChange={onEdgesChange as never}
+        onConnect={onConnect}
+        onNodeClick={handleNodeClick}
+        onEdgeClick={handleEdgeClick}
+        onPaneClick={handlePaneClick}
+        connectionLineComponent={Connection}
+        defaultEdgeOptions={defaultEdgeOptions}
+        panOnDrag
+      />
+      {children}
+    </>
   );
 }
 
-export function WorkflowCanvas() {
+export function WorkflowCanvas({ children }: { children?: ReactNode }) {
   return (
     <ReactFlowProvider>
-      <WorkflowCanvasInner />
+      <WorkflowCanvasInner>{children}</WorkflowCanvasInner>
     </ReactFlowProvider>
   );
 }
