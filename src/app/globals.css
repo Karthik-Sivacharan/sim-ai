@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -121,9 +121,65 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
-  html {
-    @apply font-sans;
+}
+
+/* React Flow overrides */
+.react-flow__attribution {
+  background: transparent !important;
+}
+
+.react-flow__pane {
+  cursor: grab;
+}
+
+.react-flow__pane:active {
+  cursor: grabbing;
+}
+
+.react-flow__handle {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--primary);
+  background: var(--background);
+  cursor: crosshair;
+}
+
+.react-flow__handle:hover {
+  background: var(--primary);
+}
+
+@media (pointer: coarse) {
+  .react-flow__handle {
+    width: 44px;
+    height: 44px;
   }
+}
+
+/* Edge animation */
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+}
+
+.react-flow__edge-path {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--primary);
+}
+
+.react-flow__connection-path {
+  stroke: var(--ring);
+  stroke-width: 1;
+}
+
+/* Node selection */
+.react-flow__node.selected .node-container {
+  ring: 2px;
+  ring-color: var(--primary);
 }

@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sim AI — Visual Workflow Builder
+
+A modern visual AI agent workflow builder inspired by [sim.ai](https://sim.ai)'s canvas-based approach. Built as a design engineering demo with a polished, production-grade UI featuring node-based workflow composition and a distinctive design system.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4 with OKLCH design tokens
+- **Components:** shadcn/ui + Vercel AI Elements
+- **Workflow Canvas:** React Flow (@xyflow/react v12)
+- **State Management:** Zustand
+- **Auto-Layout:** Dagre
+- **Animation:** Motion (Framer Motion)
+- **Icons:** Lucide React
+- **Dark Mode:** next-themes
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the workflow builder.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                        # Next.js App Router pages
+│   ├── layout.tsx              # Root layout with providers
+│   ├── page.tsx                # Main workflow editor
+│   └── globals.css             # OKLCH design tokens
+├── components/
+│   ├── ai-elements/            # Vercel AI Elements (canvas, node, edge, controls)
+│   ├── ui/                     # shadcn/ui primitives
+│   └── workflow/               # Workflow-specific components
+│       ├── workflow-canvas.tsx  # React Flow canvas wrapper
+│       ├── workflow-header.tsx  # Top bar with toolbar
+│       ├── workflow-toolbar.tsx # Add, undo/redo, save, run
+│       ├── node-config-panel.tsx # Node properties panel
+│       ├── config-panel-sidebar.tsx # Resizable right sidebar
+│       ├── action-grid.tsx     # Searchable action picker
+│       └── nodes/              # Custom node types (trigger, action)
+├── stores/
+│   └── workflow-store.ts       # Zustand: nodes, edges, selection, undo/redo
+└── lib/
+    └── workflow/               # Types, constants, layout utils
+```
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- Drag-and-drop node-based workflow canvas
+- Trigger nodes (Manual, Schedule, Webhook)
+- Action nodes with provider integrations (AI Gateway, GitHub, Slack, Resend, Stripe)
+- Searchable action picker with collapsible provider groups
+- Node configuration panel with Properties/Code/Runs tabs
+- Undo/redo support
+- Dark mode toggle
+- OKLCH-based design token system
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev          # Start dev server
+npm run build        # Production build
+npm run lint         # Run ESLint
+```
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
