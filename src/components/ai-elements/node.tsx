@@ -91,8 +91,8 @@ export const NodeFieldRow = ({
     )}
     {...props}
   >
-    <span className="shrink-0 text-xs text-muted-foreground">{label}</span>
-    <span className="truncate text-right text-xs font-medium text-foreground">
+    <span className="shrink-0 text-sm md:text-xs text-muted-foreground">{label}</span>
+    <span className="truncate text-right text-sm md:text-xs font-medium text-foreground">
       {value}
     </span>
   </div>

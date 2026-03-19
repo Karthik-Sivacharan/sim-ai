@@ -40,9 +40,14 @@ export function WorkflowHeader() {
         </div>
       </div>
 
-      {/* Right: toolbar + config toggle + theme */}
+      {/* Center: toolbar actions */}
       <div className="flex items-center gap-2">
         <WorkflowToolbar />
+      </div>
+
+      {/* Right: theme + config panel toggle (mobile) */}
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
         <Button
           variant="ghost"
           size="icon-xs"
@@ -52,7 +57,6 @@ export function WorkflowHeader() {
         >
           <Icon name={configPanelOpen ? "panel-right-close" : "panel-right-open"} size="sm" />
         </Button>
-        <ThemeToggle />
       </div>
     </header>
   );

@@ -15,7 +15,7 @@ export function UsageIndicator() {
 
   return (
     <div className="flex items-center gap-3">
-      <Badge variant="secondary" className="font-medium text-xs">
+      <Badge variant="secondary" className="font-medium text-sm md:text-xs">
         {PLAN}
       </Badge>
 

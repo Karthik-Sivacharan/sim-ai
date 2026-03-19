@@ -35,6 +35,10 @@ import {
   PlusSignIcon,
   Settings01Icon,
 
+  // Theme
+  Sun01Icon,
+  Moon02Icon,
+
   // Status
   CheckmarkCircle02Icon,
   CancelCircleIcon,
@@ -118,6 +122,10 @@ export const icons = {
   "plus": PlusSignIcon,
   "settings": Settings01Icon,
   "close": Cancel01Icon,
+
+  // Theme
+  "sun": Sun01Icon,
+  "moon": Moon02Icon,
 
   // Status
   "check-circle": CheckmarkCircle02Icon,

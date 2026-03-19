@@ -277,12 +277,12 @@ function CopilotChat() {
           {/* Bottom row — actions */}
           <div className="mt-2 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <button className="flex h-7 items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-xs text-muted-foreground transition-colors hover:text-foreground">
+              <button className="flex h-7 items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-sm md:text-xs text-muted-foreground transition-colors hover:text-foreground">
                 <Icon name="box" size="xs" />
                 Build
               </button>
-              <button className="flex h-7 items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-xs text-muted-foreground transition-colors hover:text-foreground">
-                <span className="font-mono text-[10px] font-semibold">A\</span>
+              <button className="flex h-7 items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-sm md:text-xs text-muted-foreground transition-colors hover:text-foreground">
+                <span className="font-mono text-[10px] md:text-[10px] font-semibold">A\</span>
                 Claude Opus 4.5
               </button>
             </div>
