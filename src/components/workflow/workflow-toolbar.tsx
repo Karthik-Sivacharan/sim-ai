@@ -15,7 +15,7 @@ export function WorkflowToolbar() {
         <TooltipTrigger render={
           <Button variant="outline" size="sm" className="gap-1.5">
             <Icon name="upload" size="xs" />
-            Deploy
+            <span className="hidden md:inline">Deploy</span>
           </Button>
         } />
         <TooltipContent>Deploy workflow</TooltipContent>
@@ -25,7 +25,7 @@ export function WorkflowToolbar() {
         <TooltipTrigger render={
           <Button variant="default" size="sm" className="gap-1.5">
             <Icon name="play" size="xs" />
-            Run
+            <span className="hidden md:inline">Run</span>
           </Button>
         } />
         <TooltipContent>Run workflow</TooltipContent>

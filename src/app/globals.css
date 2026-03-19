@@ -84,6 +84,17 @@
   --icon-sm: 16px;
   --icon-md: 20px;
   --icon-lg: 24px;
+
+  /* ── Layout tokens ── */
+  --layout-sidebar-width: 208px;
+  --layout-config-panel-width: 360px;
+  --layout-logs-panel-height: 240px;
+  --layout-header-height: 3.5rem;
+  --layout-panel-gap: 1rem;
+  --layout-collapsed-height: 48px;
+
+  /* ── Breakpoints (reference only — Tailwind handles actual queries) ── */
+  --breakpoint-mobile: 768px;
 }
 
 :root {
@@ -227,6 +238,16 @@
   .react-flow__handle {
     width: 44px;
     height: 44px;
+  }
+
+  /* Larger node targets on touch devices */
+  .react-flow__node {
+    touch-action: none;
+  }
+
+  /* Show node toolbar on tap (selected) instead of hover */
+  .react-flow__node.selected .group\/node > :first-child {
+    opacity: 1;
   }
 }
 

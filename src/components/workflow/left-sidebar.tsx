@@ -9,10 +9,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useWorkflowStore } from "@/stores/workflow-store";
 import type { IconName } from "@/lib/icons";
-
-const SIDEBAR_WIDTH = 208;
-const COLLAPSED_HEIGHT = 48;
 
 const WORKFLOWS = [
   { id: "1", name: "Chatbot with Internal …" },
@@ -28,27 +32,19 @@ const bottomItems: { icon: IconName; label: string }[] = [
   { icon: "settings", label: "Settings" },
 ];
 
-export function LeftSidebar() {
-  const [expanded, setExpanded] = useState(true);
-  const [activeWorkflow, setActiveWorkflow] = useState<string>("2");
-
-  const toggle = useCallback(() => setExpanded((v) => !v), []);
-
+function SidebarContent({
+  expanded,
+  toggle,
+  activeWorkflow,
+  setActiveWorkflow,
+}: {
+  expanded: boolean;
+  toggle: () => void;
+  activeWorkflow: string;
+  setActiveWorkflow: (id: string) => void;
+}) {
   return (
-    <div
-      className={cn(
-        "absolute top-4 left-4 z-10 flex flex-col overflow-hidden",
-        "border border-border-glass bg-surface-translucent shadow-glass backdrop-panel",
-        "transition-[height,border-radius] ease-[var(--ease-out-expo)]",
-        expanded
-          ? "rounded-2xl duration-[var(--duration-panel)]"
-          : "rounded-xl duration-[calc(var(--duration-panel)*0.8)]"
-      )}
-      style={{
-        width: SIDEBAR_WIDTH,
-        height: expanded ? "calc(100% - 2rem)" : COLLAPSED_HEIGHT,
-      }}
-    >
+    <>
       {/* Header — always visible */}
       <div className="flex shrink-0 items-center justify-between p-3">
         <button
@@ -105,7 +101,7 @@ export function LeftSidebar() {
             <button className="flex h-8 w-full items-center gap-2 rounded-lg border border-border bg-background/50 px-2.5 text-sm text-muted-foreground transition-colors hover:bg-background">
               <Icon name="search" size="xs" />
               <span className="flex-1 text-left">Search</span>
-              <kbd className="flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+              <kbd className="hidden md:flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
                 ⌘K
               </kbd>
             </button>
@@ -170,6 +166,56 @@ export function LeftSidebar() {
           </nav>
         </div>
       </div>
+    </>
+  );
+}
+
+/** Desktop: floating absolute panel. Mobile: slide-in Sheet from left. */
+export function LeftSidebar() {
+  const [expanded, setExpanded] = useState(true);
+  const [activeWorkflow, setActiveWorkflow] = useState<string>("2");
+  const isMobile = useIsMobile();
+  const { leftSidebarOpen, setLeftSidebarOpen } = useWorkflowStore();
+
+  const toggle = useCallback(() => setExpanded((v) => !v), []);
+
+  if (isMobile) {
+    return (
+      <Sheet open={leftSidebarOpen} onOpenChange={setLeftSidebarOpen}>
+        <SheetContent side="left" showCloseButton={false} className="w-[var(--layout-sidebar-width)] p-0">
+          <SheetTitle className="sr-only">Workspace sidebar</SheetTitle>
+          <SidebarContent
+            expanded={true}
+            toggle={() => setLeftSidebarOpen(false)}
+            activeWorkflow={activeWorkflow}
+            setActiveWorkflow={setActiveWorkflow}
+          />
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "absolute top-[var(--layout-panel-gap)] left-[var(--layout-panel-gap)] z-10 flex flex-col overflow-hidden",
+        "border border-border-glass bg-surface-translucent shadow-glass backdrop-panel",
+        "transition-[height,border-radius] ease-[var(--ease-out-expo)]",
+        expanded
+          ? "rounded-2xl duration-[var(--duration-panel)]"
+          : "rounded-xl duration-[calc(var(--duration-panel)*0.8)]"
+      )}
+      style={{
+        width: "var(--layout-sidebar-width)",
+        height: expanded ? "calc(100% - 2 * var(--layout-panel-gap))" : "var(--layout-collapsed-height)",
+      }}
+    >
+      <SidebarContent
+        expanded={expanded}
+        toggle={toggle}
+        activeWorkflow={activeWorkflow}
+        setActiveWorkflow={setActiveWorkflow}
+      />
     </div>
   );
 }

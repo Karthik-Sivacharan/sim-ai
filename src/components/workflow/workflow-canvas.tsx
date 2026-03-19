@@ -7,6 +7,7 @@ import { Canvas } from "@/components/ai-elements/canvas";
 import { Edge } from "@/components/ai-elements/edge";
 import { Connection } from "@/components/ai-elements/connection";
 import { useWorkflowStore } from "@/stores/workflow-store";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import { TriggerNode } from "@/components/workflow/nodes/trigger-node";
 import { ActionNode } from "@/components/workflow/nodes/action-node";
 
@@ -29,13 +30,19 @@ function WorkflowCanvasInner({ children }: { children?: ReactNode }) {
     onConnect,
     setSelectedNodeId,
     setSelectedEdgeId,
+    setConfigPanelOpen,
   } = useWorkflowStore();
+
+  const isMobile = useIsMobile();
 
   const handleNodeClick: NodeMouseHandler<Node> = useCallback(
     (_event, node) => {
       setSelectedNodeId(node.id);
+      if (isMobile) {
+        setConfigPanelOpen(true);
+      }
     },
-    [setSelectedNodeId]
+    [setSelectedNodeId, isMobile, setConfigPanelOpen]
   );
 
   const handleEdgeClick = useCallback(
@@ -71,6 +78,8 @@ function WorkflowCanvasInner({ children }: { children?: ReactNode }) {
         connectionLineComponent={Connection}
         defaultEdgeOptions={defaultEdgeOptions}
         panOnDrag
+        /* On mobile: disable selection-on-drag so touch pan works naturally */
+        selectionOnDrag={!isMobile}
       />
       {children}
     </>

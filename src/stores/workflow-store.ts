@@ -23,6 +23,14 @@ interface WorkflowState {
   history: HistoryEntry[];
   future: HistoryEntry[];
 
+  /* Panel visibility (mobile) */
+  leftSidebarOpen: boolean;
+  configPanelOpen: boolean;
+  logsPanelOpen: boolean;
+  setLeftSidebarOpen: (open: boolean) => void;
+  setConfigPanelOpen: (open: boolean) => void;
+  setLogsPanelOpen: (open: boolean) => void;
+
   onNodesChange: OnNodesChange<WorkflowNode>;
   onEdgesChange: OnEdgesChange<WorkflowEdge>;
   onConnect: OnConnect;
@@ -130,6 +138,14 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
   workflowName: "",
   history: [],
   future: [],
+
+  /* Panel visibility — default closed (mobile uses these; desktop ignores them) */
+  leftSidebarOpen: false,
+  configPanelOpen: false,
+  logsPanelOpen: false,
+  setLeftSidebarOpen: (open) => set({ leftSidebarOpen: open }),
+  setConfigPanelOpen: (open) => set({ configPanelOpen: open }),
+  setLogsPanelOpen: (open) => set({ logsPanelOpen: open }),
 
   onNodesChange: (changes) => {
     set((state) => ({
