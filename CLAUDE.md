@@ -20,28 +20,32 @@ A modern visual AI agent workflow builder inspired by sim.ai's canvas-based appr
 ## Project Structure
 ```
 src/
-├── app/                        # Next.js App Router pages
-│   ├── layout.tsx              # Root layout with providers
-│   ├── page.tsx                # Main workflow editor
-│   └── globals.css             # Design tokens + shadcn variables
+├── app/                          # Next.js App Router
+│   ├── layout.tsx                # Root layout with providers
+│   ├── page.tsx                  # Main workflow editor page
+│   └── globals.css               # Design tokens, glass utilities, motion tokens
 ├── components/
-│   ├── ui/                     # shadcn/ui primitives (button, dialog, etc.)
-│   ├── workflow/               # Workflow-specific components
-│   │   ├── canvas.tsx          # 'use client' React Flow wrapper
-│   │   ├── nodes/              # Custom node types
-│   │   ├── edges/              # Custom edge types
-│   │   ├── panels/             # Config panels, node picker
-│   │   └── toolbar/            # Workflow toolbar
-│   ├── layout/                 # App shell, navbar, sidebar
-│   └── shared/                 # Cross-cutting components
-├── stores/                     # Zustand stores
-│   └── workflow-store.ts       # Nodes, edges, selection, history
-├── hooks/                      # Custom React hooks
-│   └── use-is-mobile.ts        # SSR-safe mobile breakpoint hook
-├── lib/
-│   ├── utils.ts                # cn() utility
-│   └── workflow/               # Types, constants, layout, validation
-└── types/                      # Shared TypeScript types
+│   ├── ui/                       # shadcn/ui primitives (all use Hugeicons)
+│   ├── ai-elements/              # Reusable AI component library (canvas, node, edge)
+│   ├── workflow/                  # Workflow-specific components
+│   │   ├── workflow-canvas.tsx    # React Flow wrapper with touch support
+│   │   ├── workflow-header.tsx    # Header with mobile toggles
+│   │   ├── left-sidebar.tsx      # Workspace sidebar (Sheet on mobile)
+│   │   ├── config-panel-sidebar.tsx # Config panel (Sheet on mobile)
+│   │   ├── logs-panel.tsx        # Logs panel (bottom Sheet on mobile)
+│   │   ├── node-config-panel.tsx  # Copilot, toolbar, and editor tabs
+│   │   ├── node-hover-toolbar.tsx # Node actions toolbar
+│   │   ├── nodes/                 # Custom node types (trigger, action)
+│   │   └── canvas-controls.tsx    # Zoom in/out/fit controls
+│   └── theme-toggle.tsx           # Light/dark mode toggle
+├── stores/
+│   └── workflow-store.ts          # Zustand (nodes, edges, history, panel state)
+├── hooks/
+│   └── use-is-mobile.ts          # SSR-safe mobile breakpoint hook
+└── lib/
+    ├── icons.ts                   # Icon registry (Hugeicons, single source of truth)
+    ├── utils.ts                   # cn() utility
+    └── workflow/                  # Types, constants, helpers
 ```
 
 ## Coding Conventions
