@@ -12,7 +12,7 @@ A modern visual AI agent workflow builder inspired by sim.ai's canvas-based appr
 - **State Management:** Zustand
 - **Auto-Layout:** Dagre
 - **Animation:** Motion (Framer Motion)
-- **Icons:** Lucide React
+- **Icons:** Hugeicons (`@hugeicons/react` + `@hugeicons/core-free-icons`)
 - **Dark Mode:** next-themes
 - **Variants:** class-variance-authority (cva)
 - **Notifications:** Sonner
@@ -37,6 +37,7 @@ src/
 ├── stores/                     # Zustand stores
 │   └── workflow-store.ts       # Nodes, edges, selection, history
 ├── hooks/                      # Custom React hooks
+│   └── use-is-mobile.ts        # SSR-safe mobile breakpoint hook
 ├── lib/
 │   ├── utils.ts                # cn() utility
 │   └── workflow/               # Types, constants, layout, validation
@@ -72,6 +73,23 @@ src/
 - Use `cn()` utility for conditional class merging
 - Use `cva()` for component variants
 - Workflow-specific tokens: `--color-node-*`, `--color-edge-*`, `--shadow-node-*`
+
+### Icons
+- **Single icon family:** Hugeicons only — never import from `lucide-react`
+- All icons are registered in `src/lib/icons.ts` (single source of truth)
+- Custom components use `<Icon name="..." size="sm" />` from `src/components/ui/icon.tsx`
+- shadcn/ui primitives use `<HugeiconsIcon icon={icons["..."]} />` directly
+- To add a new icon: import from `@hugeicons/core-free-icons` in `icons.ts`, add to the `icons` map
+
+### Mobile Responsiveness
+- **Breakpoint:** Tailwind `md:` (768px) — mobile-first approach
+- **Hook:** `useIsMobile()` in `src/hooks/use-is-mobile.ts` (SSR-safe via `useSyncExternalStore`)
+- **Layout tokens** in `globals.css`: `--layout-sidebar-width`, `--layout-config-panel-width`, `--layout-logs-panel-height`, `--layout-header-height`, `--layout-panel-gap`
+- **Mobile panels:** Sidebars render as `Sheet` (slide-in drawers) on mobile, absolute panels on desktop
+- **Panel state:** `leftSidebarOpen`, `configPanelOpen`, `logsPanelOpen` in Zustand store (mobile only)
+- **Touch:** `selectionOnDrag` disabled on mobile for touch panning; handles enlarged via `@media (pointer: coarse)`
+- **Font sizes:** Use `text-sm md:text-xs` pattern (14px mobile, 12px desktop) for small text
+- **Desktop unchanged:** All mobile paths gate on `useIsMobile()` — desktop code paths are identical
 
 ### Code Quality
 - Functions < 50 lines
