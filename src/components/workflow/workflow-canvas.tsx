@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, type ReactNode } from "react";
 import type { NodeTypes, EdgeTypes, NodeMouseHandler, Node } from "@xyflow/react";
-import { ReactFlowProvider } from "@xyflow/react";
+import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
 import { Canvas } from "@/components/ai-elements/canvas";
 import { Edge } from "@/components/ai-elements/edge";
 import { Connection } from "@/components/ai-elements/connection";
@@ -34,6 +34,16 @@ function WorkflowCanvasInner({ children }: { children?: ReactNode }) {
   } = useWorkflowStore();
 
   const isMobile = useIsMobile();
+  const { fitView } = useReactFlow();
+
+  /* Re-center the canvas when switching between mobile/desktop layouts */
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => fitView({ padding: isMobile ? 0.5 : 0.3, maxZoom: 0.85 }),
+      100
+    );
+    return () => clearTimeout(timeout);
+  }, [isMobile, fitView]);
 
   const handleNodeClick: NodeMouseHandler<Node> = useCallback(
     (_event, node) => {
@@ -62,6 +72,11 @@ function WorkflowCanvasInner({ children }: { children?: ReactNode }) {
     []
   );
 
+  const fitViewOptions = useMemo(
+    () => ({ maxZoom: 0.85, padding: isMobile ? 0.5 : 0.3 }),
+    [isMobile]
+  );
+
   return (
     <>
       <Canvas
@@ -77,6 +92,7 @@ function WorkflowCanvasInner({ children }: { children?: ReactNode }) {
         onPaneClick={handlePaneClick}
         connectionLineComponent={Connection}
         defaultEdgeOptions={defaultEdgeOptions}
+        fitViewOptions={fitViewOptions}
         panOnDrag
         /* On mobile: disable selection-on-drag so touch pan works naturally */
         selectionOnDrag={!isMobile}
