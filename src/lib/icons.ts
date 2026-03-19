@@ -5,8 +5,8 @@
  * To swap an icon, change its mapping here — every usage updates automatically.
  *
  * Naming: kebab-case, matching the concept (not the library name).
- * shadcn/ui primitives still use Lucide internally — only custom components
- * consume this registry via the <Icon> component.
+ * All components — including shadcn/ui primitives — consume this registry.
+ * No Lucide icons should be imported directly anywhere in the app.
  */
 
 import {
@@ -65,6 +65,10 @@ import {
   MessageSquareDiffIcon,
   Mail01Icon,
   CreditCardIcon,
+
+  // UI primitives (shadcn)
+  Tick02Icon,
+  Loading03Icon,
 
   // Misc
   MoreHorizontalIcon,
@@ -160,6 +164,10 @@ export const icons = {
   "webhook": WebhookIcon,
   "download": Download04Icon,
   "file-add": FileAddIcon,
+
+  // UI primitives (shadcn)
+  "tick": Tick02Icon,
+  "loader": Loading03Icon,
 
   // Copilot / Input
   "at-sign": AtIcon,

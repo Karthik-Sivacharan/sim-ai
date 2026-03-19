@@ -5,7 +5,8 @@ import { Dialog as SheetPrimitive } from "@base-ui/react/dialog"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { XIcon } from "lucide-react"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { icons } from "@/lib/icons"
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
@@ -70,8 +71,7 @@ function SheetContent({
               />
             }
           >
-            <XIcon
-            />
+            <HugeiconsIcon icon={icons["close"]} size={16} color="currentColor" />
             <span className="sr-only">Close</span>
           </SheetPrimitive.Close>
         )}

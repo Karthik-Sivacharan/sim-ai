@@ -281,9 +281,9 @@ function CopilotChat() {
                 <Icon name="box" size="xs" />
                 Build
               </button>
-              <button className="flex h-7 items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-sm md:text-xs text-muted-foreground transition-colors hover:text-foreground">
-                <span className="font-mono text-[10px] md:text-[10px] font-semibold">A\</span>
-                Claude Opus 4.5
+              <button className="flex h-7 max-w-32 md:max-w-none items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-sm md:text-xs text-muted-foreground transition-colors hover:text-foreground">
+                <span className="shrink-0 font-mono text-[10px] font-semibold">A\</span>
+                <span className="truncate">Claude Opus 4.5</span>
               </button>
             </div>
 
